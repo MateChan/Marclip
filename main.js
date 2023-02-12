@@ -50,7 +50,7 @@ resetButton.addEventListener("click", () => {
 })
 
 if(safeStr) {
-    mdContent.innerHTML = marked.parse(rawStr)
+    mdContent.innerHTML = marked.parse(rawStr, { sanitize: true })
     if(isEdit) {
         editArea.value = rawStr
     }
