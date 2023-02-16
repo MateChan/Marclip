@@ -1,4 +1,4 @@
-import { utf8ToBase64, base64ToUrl, urlToBase64, base64ToUtf8 } from "./convert.js"
+import { utf8ToBase64, base64ToUrl, base64ToUtf8, urlToBase64 } from "./convert.js"
 
 const details       = document.getElementById("details")
 const mdContent     = document.getElementById("mdContent")
@@ -11,6 +11,17 @@ const params = new URLSearchParams(document.location.search)
 const safeStr = params.get("t")
 const isEdit = params.get("p")
 const rawStr = base64ToUtf8(urlToBase64(safeStr))
+
+window.onload = ()=>{
+    const tmpHeight = mdContent.contentWindow.document.body.scrollHeight
+    if(tmpHeight > 1000){
+        mdContent.height = 1000
+    } else if (tmpHeight < 300) {
+        mdContent.height = 300
+    } else {
+        mdContent.height = mdContent.contentWindow.document.body.scrollHeight;
+    }
+}
 
 const setWordCount = () => {
     const len = editArea.value.length
@@ -50,7 +61,7 @@ resetButton.addEventListener("click", () => {
 })
 
 if(safeStr) {
-    mdContent.innerHTML = marked.parse(rawStr, { sanitize: true })
+    mdContent.src="iframe.html"+document.location.search
     if(isEdit) {
         editArea.value = rawStr
     }
